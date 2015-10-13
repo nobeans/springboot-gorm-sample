@@ -1,0 +1,45 @@
+buildscript {
+    ext {
+        springBootVersion = '1.2.6.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath 'io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE'
+        classpath "org.springframework:springloaded:1.2.4.RELEASE"
+    }
+}
+
+apply plugin: 'groovy'
+apply plugin: 'spring-boot'
+apply plugin: 'io.spring.dependency-management'
+
+jar {
+    baseName = 'book'
+    version = '1.0.0'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.codehaus.groovy:groovy'
+
+    runtime 'com.h2database:h2'
+    //runtime 'org.postgresql:postgresql:9.4-1204-jdbc42'
+    //runtime 'org.springframework.boot:spring-boot-starter-jdbc'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    //compile "org.lazyluke:log4jdbc-remix:0.2.7" // SQLロギング用
+    compile "org.grails:gorm-hibernate4-spring-boot:1.1.0.RELEASE" // GORM
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.7'
+}

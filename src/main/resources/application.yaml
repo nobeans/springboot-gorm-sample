@@ -1,0 +1,15 @@
+logging:
+  file: app.log
+
+server:
+  port: 8080
+
+spring:
+  aop:
+    proxy-target-class: true
+
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5432/book
+#    username: postgres
+#    password:
