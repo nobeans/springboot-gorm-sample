@@ -46,4 +46,31 @@ class BookController {
         }
         book.delete() // データベースから削除する
     }
+
+    // テスト用
+    @RequestMapping("test")
+    def test() {
+        println ">" * 50
+
+        Book.list()*.delete()
+
+        def book = new Book(title: "プログラミングGROOVY", author: "中野 靖治、他")
+        book.save() // データベースへの保存
+
+        assert Book.count() == 1 // レコード数の取得
+
+        def books = Book.where { title == "プログラミングGROOVY" }.list() // データベースからの取得
+        assert books*.title == ["プログラミングGROOVY"]
+
+        def book1 = new Book(title: "ダミータイトル", author: "")
+        book1.save()             // 自動的にバリデーションが実行される
+        assert book1.hasErrors() // 空文字禁止制約のためエラーが検出される
+
+        def book2 = new Book(title: "ダミータイトル", author: "x" * 101) // author＝xを101個つなげた文字列
+        book2.save()
+        assert book2.hasErrors() // 100文字超過のためエラーが検出される
+
+        println "PASSED!!"
+        println "<" * 50
+    }
 }
